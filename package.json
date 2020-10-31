@@ -1,0 +1,25 @@
+{
+  "name": "highlightjs-mlir",
+  "version": "0.0.1",
+  "description": "highlight.js syntax definition for MLIR textual format",
+  "main": "src/robots-txt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/highlightjs/highlightjs-mlir.git"
+  },
+  "keywords": [
+    "mlir",
+    "highlight.js",
+    "highlightjs",
+    "syntax"
+  ],
+  "author": "Jacques Pienaar <jpienaar@google.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/highlightjs/highlightjs-mlir/issues"
+  },
+  "homepage": "https://github.com/highlightjs/highlightjs-mlir"
+}

@@ -1,0 +1,15 @@
+func @func_with_ops(%a : f32) {
+  %t = "getTensor"() : () -> tensor<4x4x?x vector<10xf32>>
+
+  %i6 = muli %i2, %i2 : i32
+  %t2 = "std.dim"(%t){index = 2} : (tensor<4x4x?xvector<10xf32>>) -> !tf.index
+  // TODO: Affine mappings not supported yet in highlighting
+  %x = "foo"(%a, %a) : (f32,f32) -> (memref<1 x i32, (d0) -> (d0), 4>)
+
+  return
+}
+
+func @correct_variadic_result() -> tensor<f32> {
+  %0:5 = "test.mixed_normal_variadic_result"() : () -> (tensor<f32>, tensor<f32>, tensor<f32>, tensor<f32>, tensor<f32>)
+  return %0#4 : tensor<f32>
+}

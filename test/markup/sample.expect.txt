@@ -1,0 +1,15 @@
+<span class="hljs-keyword">func</span> <span class="hljs-title">@func_with_ops</span>(<span class="hljs-symbol">%a</span> : <span class="hljs-keyword">f32</span>) {
+  <span class="hljs-symbol">%t</span> = <span class="hljs-string">&quot;getTensor&quot;</span>() : () -&gt; <span class="hljs-keyword">tensor&lt;<span class="hljs-number">4x4x?x</span> <span class="hljs-keyword">vector&lt;<span class="hljs-number">10x</span><span class="hljs-keyword">f32</span>&gt;</span>&gt;</span>
+
+  <span class="hljs-symbol">%i6</span> = muli <span class="hljs-symbol">%i2</span>, <span class="hljs-symbol">%i2</span> : <span class="hljs-keyword">i32</span>
+  <span class="hljs-symbol">%t2</span> = <span class="hljs-string">&quot;std.dim&quot;</span>(<span class="hljs-symbol">%t</span>){index = <span class="hljs-number">2</span>} : (<span class="hljs-keyword">tensor&lt;<span class="hljs-number">4x4x?x</span>vector&lt;<span class="hljs-number">10x</span><span class="hljs-keyword">f32</span>&gt;</span>&gt;) -&gt; <span class="hljs-title">!tf.index</span>
+  <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Affine mappings not supported yet in highlighting</span>
+  <span class="hljs-symbol">%x</span> = <span class="hljs-string">&quot;foo&quot;</span>(<span class="hljs-symbol">%a</span>, <span class="hljs-symbol">%a</span>) : (<span class="hljs-keyword">f32</span>,<span class="hljs-keyword">f32</span>) -&gt; (<span class="hljs-keyword">memref&lt;<span class="hljs-number">1</span> <span class="hljs-number">x</span> <span class="hljs-keyword">i32</span>, (d<span class="hljs-number">0</span>) -&gt;</span> (d<span class="hljs-number">0</span>), <span class="hljs-number">4</span>&gt;)
+
+  <span class="hljs-keyword">return</span>
+}
+
+<span class="hljs-keyword">func</span> <span class="hljs-title">@correct_variadic_result</span>() -&gt; <span class="hljs-keyword">tensor&lt;<span class="hljs-keyword">f32</span>&gt;</span> {
+  <span class="hljs-symbol">%0:5</span> = <span class="hljs-string">&quot;test.mixed_normal_variadic_result&quot;</span>() : () -&gt; (<span class="hljs-keyword">tensor&lt;<span class="hljs-keyword">f32</span>&gt;</span>, <span class="hljs-keyword">tensor&lt;<span class="hljs-keyword">f32</span>&gt;</span>, <span class="hljs-keyword">tensor&lt;<span class="hljs-keyword">f32</span>&gt;</span>, <span class="hljs-keyword">tensor&lt;<span class="hljs-keyword">f32</span>&gt;</span>, <span class="hljs-keyword">tensor&lt;<span class="hljs-keyword">f32</span>&gt;</span>)
+  <span class="hljs-keyword">return</span> <span class="hljs-symbol">%0#4</span> : <span class="hljs-keyword">tensor&lt;<span class="hljs-keyword">f32</span>&gt;</span>
+}
