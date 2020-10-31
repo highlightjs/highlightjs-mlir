@@ -2,7 +2,7 @@
   "name": "highlightjs-mlir",
   "version": "0.0.1",
   "description": "highlight.js syntax definition for MLIR textual format",
-  "main": "src/robots-txt.js",
+  "main": "src/mlir.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
