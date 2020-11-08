@@ -6,15 +6,20 @@ Website: https://mlir.llvm.org/docs/LangRef/
 */
 
 export default function(hljs) {
-  var identifier = '([a-zA-Z_][\\w\\d_$.]*)';
-  var primitive_types = {
-        className: 'keyword',
-        variants: [
-          { begin: 'i\\d+' },
-          { begin: 'f(16|32|64)' },
-          { begin: 'bf16' },
-        ]
+  var ID = '[\\w\\d_$.]+';
+  var PRIMITIVE_TYPES = {
+        className: 'type',
+        begin: '[x\\b\\s]*(i\\d+|f(16|32|64)|bf16)',
       };
+
+  var SEMI_AFFINE_MAP = {
+	  className: 'attr',
+	  begin: '\\([^)>]*\\)\\s*->\\s*\\([^)>]*\\)'
+  };
+  var LAYOUT_SPECIFICATION = {
+	  className: 'type',
+	  variants: [ SEMI_AFFINE_MAP ]
+  };
 
   return {
     name: 'MLIR',
@@ -22,75 +27,52 @@ export default function(hljs) {
       'func module ' +
       'br cond_br return',
     contains: [
+	  PRIMITIVE_TYPES,
       {
-        className: 'keyword',
-        variants: [
-          { begin: 'i\\d+' },
-          { begin: 'f(16|32|64)' },
-          { begin: 'bf16' },
-        ]
+        className: 'type',
+		begin: '!' + ID,
       },
       hljs.C_LINE_COMMENT_MODE,
+      hljs.QUOTE_STRING_MODE,	  
       {
-        className: 'keyword', begin: '\\b(memref<|tensor<|vector)\\b', end: '>',
+        className: 'type', begin: '(memref|tensor|vector)<\\b', end: '>',
+		keywords: "memref tensor vector",
         contains: [
-          'self',
           {
             className: 'number',
             variants: [
-              { begin: '\\*' },
-              { begin: '[\\?\\dx]+' },
+              { begin: '[*]x' },
+              { begin: '((\\?|\\d+)\\s*x\\s*)+' },
             ]
           },
-          primitive_types,
+          'self',		  
+          PRIMITIVE_TYPES,
+		  LAYOUT_SPECIFICATION
         ]
       },
-      // Double quote string
-      hljs.QUOTE_STRING_MODE,
       {
-        className: 'string',
-        variants: [
-          // Double-quoted string
-          { begin: '"', end: '[^\\\\]"' },
-        ],
-        relevance: 0
+        className: 'keyword', begin: 'affine_map<', end: '>',
+		keywords: 'affine_map',
+        contains: [
+		  SEMI_AFFINE_MAP
+        ]
       },
       {
         className: 'title',
         variants: [
-          { begin: '@' + identifier },
+          { begin: '@' + ID },
           { begin: '@\\d+' },
-          { begin: '!' + identifier },
-          { begin: '!\\d+' + identifier }
         ]
       },
       {
         className: 'symbol',
         variants: [
-          { begin: '%' + identifier + '([:#]\\d+)?' },
-          { begin: '%\\d+([:#]\\d+)?' },
+          { begin: '%' + ID + '([:#]\\d+)?' },
+          { begin: '\\^' + ID },			
+          { begin: '#' + ID },			
         ]
       },
-      {
-        className: 'symbol',
-        variants: [
-          { begin: '\\^' + identifier },
-        ],
-      },
-      {
-        className: 'type',
-        variants: [
-	  { begin: '!' + identifier },
-        ]
-      },
-      {
-        className: 'number',
-        variants: [
-            { begin: '0[xX][a-fA-F0-9]+' },
-            { begin: '-?\\d+(?:[.]\\d+)?(?:[eE][-+]?\\d+(?:[.]\\d+)?)?' }
-        ],
-        relevance: 0
-      },
+	  hljs.C_NUMBER_MODE
     ]
   };
 }
