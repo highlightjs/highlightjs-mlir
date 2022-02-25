@@ -13,6 +13,6 @@ Load the module after loading Highlight.js.  You'll use the minified version fou
 <script type="text/javascript" charset="UTF-8"
   src="/path/to/highlightjs-mlir/dist/mlir.min.js"></script>
 <script type="text/javascript">
-  hljs.initHighlightingOnLoad();
+  hljs.highlightAll();
 </script>
 ```
